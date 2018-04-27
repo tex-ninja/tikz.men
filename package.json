@@ -1,0 +1,30 @@
+{
+    "name": "tikz.io",
+    "version": "1.0.0",
+    "description": "tikz 2 img server",
+    "main": "src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tex-ninja/tikz.io.git"
+    },
+    "author": "Gilad Kutiel",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tex-ninja/tikz.io/issues"
+    },
+    "homepage": "https://github.com/tex-ninja/tikz.io#readme",
+    "devDependencies": {
+        "@types/node": "^8.0.0",
+        "nodemon": "^1.17.3",
+        "ts-node": "^6.0.1",
+        "typescript": "^2.8.3"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "npm run build:live",
+        "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts"
+    },
+    "dependencies": {
+        "latex": "0.0.1"
+    }
+}
