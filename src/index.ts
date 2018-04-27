@@ -4,10 +4,10 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 http.createServer((req, res) => {
+    if (!req.url) return res.end('Missing url')
     const dir = path.join(__dirname, 'tmp')
     const time = process.hrtime()
     const tex = path.join(dir, time + '.tex')
-    const pdf = path.join(dir, time + '.pdf')
     const dvi = path.join(dir, time + '.dvi')
     const svg = path.join(dir, time + '.svg')
 
@@ -15,13 +15,7 @@ http.createServer((req, res) => {
     \\documentclass[tikz]{standalone}
     \\usetikzlibrary{}
     \\begin{document}
-    \\begin{tikzpicture}
-    \\fill[gray] (3,3) rectangle +(5,5);
-    \\fill[green] (0,0) rectangle +(5,5);
-    \\draw[thick] (0,5) -- +(3,3);
-    \\draw[thick] (5,5) -- +(3,3);
-    \\draw[thick] (5,0) -- +(3,3);
-    \\end{tikzpicture}
+    ${decodeURIComponent(req.url.substr(1))}
     \\end{document}    
     `
 
@@ -31,11 +25,16 @@ http.createServer((req, res) => {
         + ` -output-directory ${dir}`
         + ` ${tex}`
     try {
+        // TODO remove this in production
+        res.setHeader('Access-Control-Allow-Origin', '*')
         console.log('tex...')
         fs.writeFile(tex, input, err => {
+            if (err) return res.end(err.message)
             console.log(latex)
             cp.exec(latex, (err, stdout) => {
+                if (err) return res.end(err.message)
                 cp.exec(`dvisvgm --relative -s  ${dvi}`, (err, stdout) => {
+                    if (err) return res.end(err.message)
                     const lines = stdout.split('\n')
                     lines.splice(0, 2)
                     const svg = lines.join('')
