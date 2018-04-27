@@ -8,9 +8,10 @@ http.createServer((req, res) => {
     const time = process.hrtime()
     const tex = path.join(dir, time + '.tex')
     const pdf = path.join(dir, time + '.pdf')
+    const dvi = path.join(dir, time + '.dvi')
     const svg = path.join(dir, time + '.svg')
 
-    const latex = `
+    const input = `
     \\documentclass[tikz]{standalone}
     \\usetikzlibrary{}
     \\begin{document}
@@ -24,20 +25,21 @@ http.createServer((req, res) => {
     \\end{document}    
     `
 
-    const pdfLatex =
-        `pdflatex`
+    const latex =
+        `latex`
         + ` -interaction=nonstopmode`
         + ` -output-directory ${dir}`
         + ` ${tex}`
     try {
         console.log('tex...')
-        fs.writeFile(tex, latex, err => {
-            console.log(pdfLatex)
-            cp.exec(pdfLatex, (err, stdout) => {
-                cp.exec(`inkscape -l ${svg} ${pdf}`, (err, stdout) => {
-                    fs.readFile(svg, (err, data) => {
-                        res.end(data)
-                    })
+        fs.writeFile(tex, input, err => {
+            console.log(latex)
+            cp.exec(latex, (err, stdout) => {
+                cp.exec(`dvisvgm --relative -s  ${dvi}`, (err, stdout) => {
+                    const lines = stdout.split('\n')
+                    lines.splice(0, 2)
+                    const svg = lines.join('')
+                    res.end(svg)
                 })
             })
         })
