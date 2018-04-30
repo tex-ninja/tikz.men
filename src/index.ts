@@ -36,13 +36,15 @@ http.createServer((req, res) => {
             console.log(latex)
             cp.exec(latex, (err, stdout) => {
                 if (err) return res.end(err.message)
-                cp.exec(`dvisvgm --relative -s  ${dvi}`, (err, stdout) => {
-                    if (err) return res.end(err.message)
-                    const lines = stdout.split('\n')
-                    lines.splice(0, 2)
-                    const svg = lines.join('')
-                    res.end(svg)
-                })
+
+                cp.exec(`dvisvgm --relative -s ${dvi}`
+                    , (err, stdout) => {
+                        if (err) return res.end(err.message)
+                        const lines = stdout.split('\n')
+                        lines.splice(0, 2)
+                        const svg = lines.join('')
+                        res.end(svg)
+                    })
             })
         })
     } catch (e) {
