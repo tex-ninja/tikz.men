@@ -13,7 +13,10 @@ http.createServer((req, res) => {
 
     const input = `
     \\documentclass[tikz]{standalone}
-    \\usetikzlibrary{}
+    \\usetikzlibrary{
+        mindmap
+        ,trees
+    }
     \\begin{document}
     ${decodeURIComponent(req.url.substr(1))}
     \\end{document}    
