@@ -3,6 +3,7 @@ import * as cp from 'child_process'
 import * as fs from 'fs'
 import * as path from 'path'
 
+console.log('starting tikz.men')
 http.createServer((req, res) => {
     if (!req.url) return res.end('Missing url')
     const dir = path.join(__dirname, 'tmp')
