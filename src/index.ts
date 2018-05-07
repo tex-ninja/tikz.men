@@ -44,6 +44,7 @@ http.createServer((req, res) => {
                         const lines = stdout.split('\n')
                         lines.splice(0, 2)
                         const svg = lines.join('')
+                        res.setHeader('Content-Type', 'image/svg+xml')
                         res.end(svg)
                     })
             })
@@ -51,4 +52,4 @@ http.createServer((req, res) => {
     } catch (e) {
         res.end(e)
     }
-}).listen(9000)
+}).listen(8979)
