@@ -14,10 +14,10 @@
     },
     "homepage": "https://github.com/tex-ninja/tikz.io#readme",
     "devDependencies": {
-        "@types/gm": "^1.17.33",
-        "@types/node": "^8.0.0",
-        "nodemon": "^1.17.3",
-        "ts-node": "^6.0.1",
+        "@types/gm": "^1.18.0",
+        "@types/node": "^8.10.16",
+        "nodemon": "^1.17.4",
+        "ts-node": "^6.0.3",
         "typescript": "^2.8.3"
     },
     "scripts": {
@@ -28,7 +28,7 @@
     "dependencies": {
         "gm": "^1.23.1",
         "latex": "0.0.1",
-        "node-latex": "^2.4.4",
+        "node-latex": "^2.5.0",
         "node-pdflatex": "^0.3.0"
     }
 }
