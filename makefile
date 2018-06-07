@@ -5,4 +5,4 @@ publish: build
 	docker push gkutiel/tikz.men
 
 run: build
-	docker run -d --name tikz.men -p 80:8979 gkutiel/tikz.men --tmpfs /tmp
+	docker run -d --name tikz.men -p 80:8979 --tmpfs /tmp gkutiel/tikz.men 
