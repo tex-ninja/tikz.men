@@ -14,6 +14,8 @@ http.createServer((req, res) => {
     }
 
     res.setHeader('Content-Type', 'image/svg+xml')
+    res.setHeader('Cache-Control', 'public')
+    res.setHeader('Cache-Control', 'max-age=31536000')
     if (!req.url) return error()
 
     const dir = path.join(__dirname, 'tmp')
