@@ -5,16 +5,16 @@ import * as path from 'path'
 
 console.log('starting tikz.men')
 http.createServer((req, res) => {
-    const error = (msg: string) => {
+    const error = () => {
         res.end(
-            `<svg height="30" width="200">
-            <text x="0" y="15" fill="red">${msg}</text>
+            `<svg xmlns="http://www.w3.org/2000/svg">
+            <text x="10" y="20" fill="red">tikz error :(</text>
             </svg>`
         )
     }
 
     res.setHeader('Content-Type', 'image/svg+xml')
-    if (!req.url) return error('Missing url')
+    if (!req.url) return error()
 
     const dir = path.join(__dirname, 'tmp')
     const time = process.hrtime()
@@ -40,14 +40,14 @@ http.createServer((req, res) => {
         + ` ${tex}`
     try {
         fs.writeFile(tex, input, err => {
-            if (err) return error(err.message)
+            if (err) return error()
             console.log(latex)
             cp.exec(latex, (err, stdout) => {
-                if (err) return error(err.message)
+                if (err) return error()
 
                 cp.exec(`dvisvgm --relative -s ${dvi}`
                     , (err, stdout) => {
-                        if (err) return error(err.message)
+                        if (err) return error()
                         const lines = stdout.split('\n')
                         lines.splice(0, 2)
                         const svg = lines.join('')
@@ -56,6 +56,6 @@ http.createServer((req, res) => {
             })
         })
     } catch (e) {
-        error('Error')
+        error()
     }
 }).listen(8979)
