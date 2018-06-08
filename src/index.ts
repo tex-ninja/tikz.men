@@ -14,11 +14,10 @@ http.createServer((req, res) => {
     }
 
     res.setHeader('Content-Type', 'image/svg+xml')
-    res.setHeader('Cache-Control', 'public')
-    res.setHeader('Cache-Control', 'max-age=31536000')
+    res.setHeader('Cache-Control', 'public, max-age=31536000')
     if (!req.url) return error()
 
-    const dir = path.join(__dirname, 'tmp')
+    const dir = '/'
     const time = process.hrtime()
     const tex = path.join(dir, time + '.tex')
     const dvi = path.join(dir, time + '.dvi')
