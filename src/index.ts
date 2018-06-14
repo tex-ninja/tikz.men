@@ -5,7 +5,19 @@ import * as path from 'path';
 
 console.log('starting tikz.men')
 http.createServer((req, res) => {
-    if (!req.url) return res.end('Missing url')
+    const error = () => {
+        res.end(
+            `<svg xmlns="http://www.w3.org/2000/svg">
+            <text x="10" y="20" fill="red">tikz error :(</text>
+            </svg>`
+        )
+    }
+
+    res.setHeader('Content-Type', 'image/svg+xml')
+    res.setHeader('Cache-Control', 'public')
+    res.setHeader('Cache-Control', 'max-age=31536000')
+    if (!req.url) return error()
+
     const dir = path.join(__dirname, 'tmp')
     const time = process.hrtime()
     const tex = path.join(dir, time + '.tex')
@@ -30,27 +42,23 @@ http.createServer((req, res) => {
         + ` -output-directory ${dir}`
         + ` ${tex}`
     try {
-        // TODO remove this in production
-        res.setHeader('Access-Control-Allow-Origin', '*')
-        console.log('tex...')
         fs.writeFile(tex, input, err => {
-            if (err) return res.end(err.message)
+            if (err) return error()
             console.log(latex)
             cp.exec(latex, (err, stdout) => {
-                if (err) return res.end(err.message)
+                if (err) return error()
 
                 cp.exec(`dvisvgm --relative -s ${dvi}`
                     , (err, stdout) => {
-                        if (err) return res.end(err.message)
+                        if (err) return error()
                         const lines = stdout.split('\n')
                         lines.splice(0, 2)
                         const svg = lines.join('')
-                        res.setHeader('Content-Type', 'image/svg+xml')
                         res.end(svg)
                     })
             })
         })
     } catch (e) {
-        res.end(e)
+        error()
     }
 }).listen(8979)
