@@ -14,21 +14,9 @@
     },
     "homepage": "https://github.com/tex-ninja/tikz.io#readme",
     "devDependencies": {
-        "@types/gm": "^1.17.33",
         "@types/node": "^8.0.0",
-        "nodemon": "^1.17.3",
-        "ts-node": "^6.0.1",
-        "typescript": "^2.8.3"
+        "nodemon": "^1.17.3"
     },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "npm run build:live",
-        "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts"
-    },
-    "dependencies": {
-        "gm": "^1.23.1",
-        "latex": "0.0.1",
-        "node-latex": "^2.4.4",
-        "node-pdflatex": "^0.3.0"
-    }
+    "scripts": {},
+    "dependencies": {}
 }

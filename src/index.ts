@@ -1,7 +1,7 @@
-import * as http from 'http'
-import * as cp from 'child_process'
-import * as fs from 'fs'
-import * as path from 'path'
+import * as cp from 'child_process';
+import * as fs from 'fs';
+import * as http from 'http';
+import * as path from 'path';
 
 console.log('starting tikz.men')
 http.createServer((req, res) => {
@@ -10,13 +10,14 @@ http.createServer((req, res) => {
     const time = process.hrtime()
     const tex = path.join(dir, time + '.tex')
     const dvi = path.join(dir, time + '.dvi')
-    const svg = path.join(dir, time + '.svg')
 
     const input = `
     \\documentclass[tikz]{standalone}
     \\usetikzlibrary{
         mindmap
         ,trees
+        ,decorations.pathmorphing
+        ,shapes.geometric
     }
     \\begin{document}
     ${decodeURIComponent(req.url.substr(1))}
