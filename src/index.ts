@@ -6,6 +6,8 @@ import * as path from 'path'
 console.log('starting tikz.men')
 http.createServer((req, res) => {
     const error = () => {
+        res.statusCode = 404
+        res.statusMessage = 'Not found';
         res.end(
             `<svg xmlns="http://www.w3.org/2000/svg">
             <text x="10" y="20" fill="red">tikz error :(</text>
@@ -21,7 +23,6 @@ http.createServer((req, res) => {
     const time = process.hrtime()
     const tex = path.join(dir, time + '.tex')
     const dvi = path.join(dir, time + '.dvi')
-    const svg = path.join(dir, time + '.svg')
 
     const input = `
     \\documentclass[tikz]{standalone}
