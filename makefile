@@ -1,7 +1,13 @@
-build:
+compile:
+	npm i && npm update && ~/.npm-global/bin/tsc
+
+prune: 
+	npm prune --production && npm dedupe
+
+build: compile prune 
 	docker build -t gkutiel/tikz.men .
 
-publish: build
+push: build
 	docker push gkutiel/tikz.men
 
 run: build

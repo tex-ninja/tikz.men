@@ -1,7 +1,7 @@
-import * as http from 'http'
-import * as cp from 'child_process'
-import * as fs from 'fs'
-import * as path from 'path'
+import * as cp from 'child_process';
+import * as fs from 'fs';
+import * as http from 'http';
+import * as path from 'path';
 
 console.log('starting tikz.men')
 http.createServer((req, res) => {
@@ -29,6 +29,8 @@ http.createServer((req, res) => {
     \\usetikzlibrary{
         mindmap
         ,trees
+        ,decorations.pathmorphing
+        ,shapes.geometric
     }
     \\begin{document}
     ${decodeURIComponent(req.url.substr(1))}
