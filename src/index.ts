@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as http from 'http';
 import * as path from 'path';
 
-console.log('starting tikz.men')
 http.createServer((req, res) => {
     const error = () => {
         res.statusCode = 404
@@ -45,7 +44,6 @@ http.createServer((req, res) => {
     try {
         fs.writeFile(tex, input, err => {
             if (err) return error()
-            console.log(latex)
             cp.exec(latex, (err, stdout) => {
                 if (err) return error()
 

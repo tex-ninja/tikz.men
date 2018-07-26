@@ -14,8 +14,7 @@
     },
     "homepage": "https://github.com/tex-ninja/tikz.io#readme",
     "devDependencies": {
-        "@types/node": "^8.10.20",
-        "nodemon": "^1.17.3"
+        "@types/node": "^8.10.20"
     },
     "scripts": {},
     "dependencies": {}
